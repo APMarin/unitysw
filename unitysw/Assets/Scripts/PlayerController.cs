@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     //Inspector Variables
 
     [SerializeField] private LayerMask ground;
+    [SerializeField] private float hDirection;
     [SerializeField] private float walkSpeed = 5f;
     [SerializeField] private int jumpForce = 20;
     [SerializeField] private float stuntForce = 10f;
@@ -31,10 +32,16 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Movement();
+        hDirection = Input.GetAxisRaw("Horizontal");
+
+        Jump();
         animationState();
         pAnim.SetInteger("state", (int)state);
 
+    }
+
+    private void FixedUpdate(){
+        Movement();
     }
 
     private void animationState()
@@ -66,29 +73,25 @@ public class PlayerController : MonoBehaviour
 
     private void Movement()
     {
-        float hDirection = Input.GetAxis("Horizontal");
-
+        rb.velocity = new Vector2(hDirection * walkSpeed * Time.fixedDeltaTime, rb.velocity.y);
         if (hDirection < 0)
         {
-            rb.velocity = new Vector2(-walkSpeed, rb.velocity.y);
+            //rb.velocity = new Vector2(-walkSpeed, rb.velocity.y);
             transform.localScale = new Vector2(-1, 1);
         }
         else if (hDirection > 0)
         {
-            rb.velocity = new Vector2(walkSpeed, rb.velocity.y);
+            //rb.velocity = new Vector2(walkSpeed, rb.velocity.y);
             transform.localScale = new Vector2(1, 1);
-        }
-
-        // Jumping
-        if (Input.GetButtonDown("Jump") && pColl.IsTouchingLayers(ground))
-        {
-            Jump();
-        }
+        }        
     }
 
     private void Jump()
     {
-        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-        state = animState.jumping;
+        if (Input.GetButtonDown("Jump") && pColl.IsTouchingLayers(ground))
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            state = animState.jumping;
+        }
     }
 }

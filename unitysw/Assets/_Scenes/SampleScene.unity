@@ -65425,6 +65425,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5334578327003502472, guid: 85c847b89a489314fa515749715e98a9,
+        type: 3}
+      propertyPath: walkSpeed
+      value: 300
+      objectReference: {fileID: 0}
     - target: {fileID: 5334578327003502475, guid: 85c847b89a489314fa515749715e98a9,
         type: 3}
       propertyPath: m_Name
@@ -65434,6 +65439,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334578327003502518, guid: 85c847b89a489314fa515749715e98a9,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334578327003502518, guid: 85c847b89a489314fa515749715e98a9,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5334578327003502519, guid: 85c847b89a489314fa515749715e98a9,
         type: 3}
