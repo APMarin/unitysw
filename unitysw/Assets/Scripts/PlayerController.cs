@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,8 +17,10 @@ public class PlayerController : MonoBehaviour
 
     //Inspector Variables
 
+    private float timer = 300;
+    private float hDirection;
+    [SerializeField] private Text timerText;
     [SerializeField] private LayerMask ground;
-    [SerializeField] private float hDirection;
     [SerializeField] private float walkSpeed = 5f;
     [SerializeField] private int jumpForce = 20;
     [SerializeField] private float stuntForce = 10f;
@@ -36,15 +40,32 @@ public class PlayerController : MonoBehaviour
 
         Jump();
         animationState();
+        Constrains(); //constrains the movement to especific limits
         pAnim.SetInteger("state", (int)state);
+        FallToDeath();
+        GameTimer();
 
         //debug
-        Debug.Log(rb.velocity.y);
+        //Debug.Log(rb.velocity.y);
     }
 
     //movement has to be in FixedUpdate bc its using Unity's physics engine
     private void FixedUpdate(){
         Movement();
+    }
+
+    private void GameTimer(){
+        if (timer >= 0)
+        {
+            timer -= Time.deltaTime;
+            timerText.text = "Time: " + (int)timer;
+        }
+        else
+        {
+            timerText.text = "Time: 0";
+            Death();
+            timer = 300;
+        }
     }
 
     private void animationState()
@@ -95,5 +116,21 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             state = animState.jumping;
         }
+    }
+
+    private void FallToDeath()
+    {
+        if(transform.position.y <= -7)
+            Death();
+    }
+
+    private void Death()
+    {
+        transform.position = new Vector3(-21f,1.52f,transform.position.z);
+    }
+
+    private void Constrains()
+    {
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -21.7f, 135f), Mathf.Clamp(transform.position.y, -8f, 100f), transform.position.z);
     }
 }

@@ -10,5 +10,11 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         transform.position = new Vector3(player.position.x, player.position.y, transform.position.z);
+        Constrains();
+    }
+
+    private void Constrains()
+    {
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -13.10f, 127.10f), Mathf.Clamp(transform.position.y, -1f, 22f), transform.position.z);
     }
 }
