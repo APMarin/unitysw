@@ -19,7 +19,10 @@ public class PlayerController : MonoBehaviour
 
     private float timer = 300;
     private float hDirection;
+    private bool isPaused = false;
     [SerializeField] private Text timerText;
+    [SerializeField] private GameObject pauseText;
+    [SerializeField] private GameObject pausePanel;
     [SerializeField] private LayerMask ground;
     [SerializeField] private float walkSpeed = 5f;
     [SerializeField] private int jumpForce = 20;
@@ -44,6 +47,7 @@ public class PlayerController : MonoBehaviour
         pAnim.SetInteger("state", (int)state);
         FallToDeath();
         GameTimer();
+        PKeyToPause();
 
         //debug
         //Debug.Log(rb.velocity.y);
@@ -132,5 +136,28 @@ public class PlayerController : MonoBehaviour
     private void Constrains()
     {
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -21.7f, 135f), Mathf.Clamp(transform.position.y, -8f, 100f), transform.position.z);
+    }
+
+    private void PKeyToPause()
+    {
+        if (Input.GetButtonDown("Pause"))
+        {
+            PauseGame();
+        }
+    }
+
+    private void PauseGame()
+    {
+        if(isPaused){
+            Time.timeScale = 1;
+            isPaused = false;
+            pauseText.SetActive(false);
+            pausePanel.SetActive(false);
+        } else {
+            Time.timeScale = 0;
+            isPaused = true;
+            pauseText.SetActive(true);
+            pausePanel.SetActive(true);
+        }
     }
 }
