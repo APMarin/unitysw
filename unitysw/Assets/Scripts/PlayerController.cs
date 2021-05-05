@@ -38,8 +38,11 @@ public class PlayerController : MonoBehaviour
         animationState();
         pAnim.SetInteger("state", (int)state);
 
+        //debug
+        Debug.Log(rb.velocity.y);
     }
 
+    //movement has to be in FixedUpdate bc its using Unity's physics engine
     private void FixedUpdate(){
         Movement();
     }
@@ -60,7 +63,7 @@ public class PlayerController : MonoBehaviour
                 state = animState.idle;
             }
         }
-        else if (Mathf.Abs(rb.velocity.x) > 2f)
+        else if (Mathf.Abs(rb.velocity.x) > .1f)
         {
             //If velocity is greater than .1 in X axis is going to Right.
             state = animState.running;
@@ -74,14 +77,13 @@ public class PlayerController : MonoBehaviour
     private void Movement()
     {
         rb.velocity = new Vector2(hDirection * walkSpeed * Time.fixedDeltaTime, rb.velocity.y);
+
         if (hDirection < 0)
         {
-            //rb.velocity = new Vector2(-walkSpeed, rb.velocity.y);
             transform.localScale = new Vector2(-1, 1);
         }
         else if (hDirection > 0)
         {
-            //rb.velocity = new Vector2(walkSpeed, rb.velocity.y);
             transform.localScale = new Vector2(1, 1);
         }        
     }

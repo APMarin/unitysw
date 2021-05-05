@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5334578327003502473}
   - component: {fileID: 5334578327003502472}
   - component: {fileID: 5334578327003502516}
+  - component: {fileID: 626999779}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -48,12 +49,12 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 4
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 79ab2ac6d1b83384ea6c55fdce446f83, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!212 &5334578327003502473
 SpriteRenderer:
@@ -120,8 +121,10 @@ MonoBehaviour:
   ground:
     serializedVersion: 2
     m_Bits: 256
-  walkSpeed: 5
-  jumpForce: 15
+  hDirection: 0
+  walkSpeed: 300
+  jumpForce: 18
+  stuntForce: 10
 --- !u!61 &5334578327003502516
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -148,3 +151,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.64818, y: 0.82077134}
   m_EdgeRadius: 0
+--- !u!95 &626999779
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5334578327003502475}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ec9d3a5c9d52db145b8814a7eb2426e5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

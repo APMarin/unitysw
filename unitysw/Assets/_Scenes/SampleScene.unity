@@ -21201,7 +21201,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 413458562}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.45, y: -1.02, z: -0.36132812}
+  m_LocalPosition: {x: -13.08, y: 1.64, z: -0.36132812}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -21220,37 +21220,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 626999777}
---- !u!1 &626999773 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5334578327003502475, guid: 85c847b89a489314fa515749715e98a9,
-    type: 3}
-  m_PrefabInstance: {fileID: 5334578326387676758}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &626999777 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5334578327003502519, guid: 85c847b89a489314fa515749715e98a9,
     type: 3}
   m_PrefabInstance: {fileID: 5334578326387676758}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &626999779
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 626999773}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ec9d3a5c9d52db145b8814a7eb2426e5, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1324449456
 GameObject:
   m_ObjectHideFlags: 0
@@ -65425,30 +65400,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5334578327003502472, guid: 85c847b89a489314fa515749715e98a9,
-        type: 3}
-      propertyPath: walkSpeed
-      value: 300
-      objectReference: {fileID: 0}
     - target: {fileID: 5334578327003502475, guid: 85c847b89a489314fa515749715e98a9,
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5334578327003502475, guid: 85c847b89a489314fa515749715e98a9,
-        type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5334578327003502518, guid: 85c847b89a489314fa515749715e98a9,
-        type: 3}
-      propertyPath: m_AngularDrag
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5334578327003502518, guid: 85c847b89a489314fa515749715e98a9,
-        type: 3}
-      propertyPath: m_CollisionDetection
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5334578327003502519, guid: 85c847b89a489314fa515749715e98a9,
         type: 3}
