@@ -21,10 +21,12 @@ public class PlayerController : MonoBehaviour
     private float hDirection;
     private bool isPaused = false;
     [SerializeField] private Text timerText;
+    [SerializeField] private Text collectableText;
     [SerializeField] private GameObject pauseText;
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private LayerMask ground;
     [SerializeField] private float walkSpeed = 5f;
+    [SerializeField] private int pCollectable = 0;
     [SerializeField] private int jumpForce = 20;
     [SerializeField] private float stuntForce = 10f;
 
@@ -66,9 +68,19 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+
             timerText.text = "Time: 0";
             Death();
             timer = 300;
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "Collectable")
+        {
+            Destroy(collision.gameObject);
+            pCollectable += 1;
+            collectableText.text = pCollectable.ToString();
         }
     }
 
