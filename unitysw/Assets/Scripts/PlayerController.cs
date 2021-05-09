@@ -172,4 +172,23 @@ public class PlayerController : MonoBehaviour
             pausePanel.SetActive(true);
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D other) //Colision con enemigos
+    {
+        if(other.gameObject.tag == "Enemy")
+        {
+            FlyingBot fbot = other.gameObject.GetComponent<FlyingBot>();
+            if(state == animState.falling)
+            {
+                fbot.JumpedOn();
+                //si cae sobre el, explota el enemigo
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce/2);
+                state = animState.jumping;
+            }
+            else{
+                transform.position = new Vector3(-21f,1.52f,transform.position.z);
+                //cualquier otra colision, causa respawn
+            }
+        }
+    }
 }
