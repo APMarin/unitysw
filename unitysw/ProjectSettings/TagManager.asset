@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Collectable
   - Enemy
+  - Meetpoint
+  - Hazard
+  - Water
   layers:
   - Default
   - TransparentFX
@@ -51,4 +54,7 @@ TagManager:
     locked: 0
   - name: Hazards
     uniqueID: 1395384953
+    locked: 0
+  - name: Water
+    uniqueID: 3237051301
     locked: 0
