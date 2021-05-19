@@ -12,14 +12,14 @@ public class PlayerController : MonoBehaviour
     private Collider2D pColl;
     
     //FSM
-    private enum animState { idle, running, jumping, falling, shoot, runningshoot}
+    private enum animState {idle, running, jumping, falling}
     private animState state = animState.idle;
 
     //Inspector Variables
     private float timer = 300;
     private float hDirection;
     private bool isPaused = false;
-    public int maxHealth = 100;
+    public int maxHealth = 50;
     public int currentHealth;
     public HealthBar hpBar;
     [SerializeField] private Text timerText;
@@ -149,11 +149,38 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
-        if (Input.GetButtonDown("Jump") && pColl.IsTouchingLayers(ground))
+        if (Input.GetButtonDown("Jump") && IsGrounded()) 
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             state = animState.jumping;
         }
+        else
+        {
+            if(!IsGrounded())
+            {
+                state = animState.jumping;
+            }
+        }
+    }
+
+    private bool IsGrounded()
+    {
+        float extraHeightText = .5f;
+        RaycastHit2D raycastHit = Physics2D.Raycast(pColl.bounds.center, Vector2.down, pColl.bounds.extents.y + extraHeightText, ground);
+        Color rayColor;
+        if (raycastHit.collider != null)
+        {
+            rayColor = Color.green;
+        }
+        else
+        {
+            rayColor = Color.red;
+        }
+        Debug.DrawRay(pColl.bounds.center, Vector2.down * (pColl.bounds.extents.y + extraHeightText));
+        Debug.Log(raycastHit.collider);
+        return raycastHit.collider != null;
+
+
     }
 
     private void FallToDeath()
@@ -225,8 +252,8 @@ public class PlayerController : MonoBehaviour
                 state = animState.jumping;
             }
             else{
-                //Player will get 20 points substracted from their health pool after collisioning with an enemy
-                takeDmg(20);
+                //Player will get 25 points substracted from their health pool after collisioning with an enemy
+                takeDmg(25);
                 //Checks if player has 0 health points, if currentHealth is equal or lower than 0 then triggerDeath will get called.
                 triggerDeath();
                 if (other.gameObject.transform.position.x > transform.position.x)
@@ -244,8 +271,8 @@ public class PlayerController : MonoBehaviour
         if(other.gameObject.tag == "Hazard")
         {
             {
-                //Player will get 100 points substracted from their health pool. Causing an immediate death.
-                takeDmg(100);
+                //Player will get 50 points substracted from their health pool. Causing an immediate death.
+                takeDmg(50);
                 triggerDeath();
             }
         }
