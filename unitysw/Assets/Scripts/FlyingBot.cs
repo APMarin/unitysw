@@ -13,12 +13,14 @@ public class FlyingBot : MonoBehaviour
     private Collider2D coll;
     private Rigidbody2D rb;
     private Animator anim;
+    private AudioSource deathsf;
     
     private void Start()
     {
         coll = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        deathsf = GetComponent<AudioSource>();
     }
     private void Update() 
     {
@@ -55,6 +57,7 @@ public class FlyingBot : MonoBehaviour
     public void JumpedOn()
     {
         anim.SetTrigger("Explode");
+        deathsf.Play();
     }
 
     private void Death()

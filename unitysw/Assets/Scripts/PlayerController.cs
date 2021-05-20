@@ -31,12 +31,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int pCollectable = 0;
     [SerializeField] private int jumpForce = 20;
     [SerializeField] private float stuntForce = 20f;
+    [SerializeField] private AudioSource footstep;
+    [SerializeField] private AudioSource coin;
+    [SerializeField] private AudioSource jumpsfx;
+    [SerializeField] private AudioSource playerdeath;
     private Scene c_Scene;
     private string sceneName;
 
 
     // Start is called before the first frame update
-    void Start()
+     private void Start()
     {
         //Unity will get the current loaded Scene to identify in which level the player is on.
         c_Scene = SceneManager.GetActiveScene();
@@ -92,6 +96,7 @@ public class PlayerController : MonoBehaviour
         // to their score pool.
         if(collision.tag == "Collectable")
         {
+            coin.Play();
             Destroy(collision.gameObject);
             pCollectable += 250;
             collectableText.text = pCollectable.ToString();
@@ -108,8 +113,10 @@ public class PlayerController : MonoBehaviour
     }
     private void animationState()
     {
+        
         if (state == animState.jumping)
         {
+
             if (rb.velocity.y < .1f)
             {
                 state = animState.falling;
@@ -119,6 +126,7 @@ public class PlayerController : MonoBehaviour
         {
             if (pColl.IsTouchingLayers(ground))
             {
+                jumpsfx.Play();
                 state = animState.idle;
             }
         }
@@ -283,11 +291,17 @@ public class PlayerController : MonoBehaviour
         if (currentHealth <= 0)
         {
             pAnim.SetTrigger("Explode");
+            playerdeath.Play();
         }
     }
     void takeDmg(int damage)
     {
         currentHealth -= damage;
         hpBar.setHealth(currentHealth);
+    }
+
+    private void Footstep()
+    {
+        footstep.Play();
     }
 }
