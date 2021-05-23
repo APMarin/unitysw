@@ -15,17 +15,14 @@ public class PlayerController : MonoBehaviour
     private enum animState {idle, running, jumping, falling}
     private animState state = animState.idle;
 
-    //Inspector Variables
+    // Inspector Variables
     private float timer = 300;
     private float hDirection;
-    private bool isPaused = false;
     public int maxHealth = 50;
     public int currentHealth;
     public HealthBar hpBar;
     [SerializeField] private Text timerText;
     [SerializeField] private Text collectableText;
-    [SerializeField] private GameObject pauseText;
-    [SerializeField] private GameObject pausePanel;
     [SerializeField] private LayerMask ground;
     [SerializeField] private float walkSpeed = 5f;
     [SerializeField] private int pCollectable = 0;
@@ -42,7 +39,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
      private void Start()
     {
-        //Unity will get the current loaded Scene to identify in which level the player is on.
+        // Unity will get the current loaded Scene to identify in which level the player is on.
         c_Scene = SceneManager.GetActiveScene();
         sceneName = c_Scene.name;
 
@@ -63,18 +60,16 @@ public class PlayerController : MonoBehaviour
         pAnim.SetInteger("state", (int)state);
         FallToDeath();
         GameTimer();
-        PKeyToPause();
-       
         //debug
         //Debug.Log(rb.velocity.y);
     }
 
-    //movement has to be in FixedUpdate because it's using Unity's physics engine
+    // Movement has to be in FixedUpdate because it's using Unity's physics engine
     private void FixedUpdate(){
         Movement();
     }
 
-    // Timer set, when the timer reaches 0 it will trigger player's death.
+    // Timer set, when the timer reaches 0 it will reset the current loaded scene
     private void GameTimer(){
         if (timer >= 0)
         {
@@ -108,6 +103,11 @@ public class PlayerController : MonoBehaviour
             if(sceneName == "Level1")
             {
                 SceneManager.LoadScene("Level2");
+            }
+            
+            if(sceneName == "Level2")
+            {
+                SceneManager.LoadScene("Final");
             }
         }
     }
@@ -185,7 +185,7 @@ public class PlayerController : MonoBehaviour
             rayColor = Color.red;
         }
         Debug.DrawRay(pColl.bounds.center, Vector2.down * (pColl.bounds.extents.y + extraHeightText));
-        Debug.Log(raycastHit.collider);
+        //Debug.Log(raycastHit.collider);
         return raycastHit.collider != null;
 
 
@@ -196,12 +196,18 @@ public class PlayerController : MonoBehaviour
         if (sceneName == "Level1")
         {
             if (transform.position.y <= -7)
+            {
                 death(-21f, 1.52f);
+                rb.velocity = new Vector2(rb.velocity.x, 0);
+            }            
         }
         if (sceneName == "Level2")
         {
             if (transform.position.y <= -7)
+            {
                 death(-20f, 12f);
+                rb.velocity = new Vector2(rb.velocity.x, 0);
+            }  
         }
     }
 
@@ -222,28 +228,7 @@ public class PlayerController : MonoBehaviour
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -21.7f, 135f), Mathf.Clamp(transform.position.y, -8f, 100f), transform.position.z);
     }
 
-    private void PKeyToPause()
-    {
-        if (Input.GetButtonDown("Pause"))
-        {
-            PauseGame();
-        }
-    }
 
-    private void PauseGame()
-    {
-        if(isPaused){
-            Time.timeScale = 1;
-            isPaused = false;
-            pauseText.SetActive(false);
-            pausePanel.SetActive(false);
-        } else {
-            Time.timeScale = 0;
-            isPaused = true;
-            pauseText.SetActive(true);
-            pausePanel.SetActive(true);
-        }
-    }
 
     private void OnCollisionEnter2D(Collision2D other) //Collision with enemies
     {
@@ -256,7 +241,7 @@ public class PlayerController : MonoBehaviour
                 //When player jumps on enemies, they will explode and remove them from the game.
                 pCollectable += 50;
                 collectableText.text = pCollectable.ToString();
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce/2);
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 state = animState.jumping;
             }
             else{
@@ -290,6 +275,7 @@ public class PlayerController : MonoBehaviour
     {
         if (currentHealth <= 0)
         {
+            rb.velocity = new Vector2(0, 0);
             pAnim.SetTrigger("Explode");
             playerdeath.Play();
         }
